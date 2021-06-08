@@ -1,0 +1,101 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <UserSecretsId>aspnet-SvelteKitDotNet-71D84783-257D-407B-8BAD-3F4DEEF07DE7</UserSecretsId>
+        <IsPackable>false</IsPackable>
+        <SpaRoot>Customer\</SpaRoot>
+        <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <!-- Don't publish the SPA source files, but do show them in the project files list -->
+        <Content Remove="$(SpaRoot)**" />
+        <None Remove="$(SpaRoot)**" />
+        <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+    </ItemGroup>
+
+    <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
+    <!-- Ensure Node.js is installed -->
+        <Exec Command="node --version" ContinueOnError="true">
+          <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
+        </Exec>
+        <Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
+        <Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
+        <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
+    </Target>
+
+    <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
+        <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
+        <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
+        <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build" />
+     
+        <!-- Include the newly-built files in the publish output -->
+        <ItemGroup>
+          <DistFiles Include="$(SpaRoot)build\**" />
+          <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+            <RelativePath>%(DistFiles.Identity)</RelativePath>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+          </ResolvedFileToPublish>
+        </ItemGroup>
+    </Target>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.6" NoWarn="NU1605" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="5.0.6" NoWarn="NU1605" />
+        <PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.2.0" />
+        <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
+        <PackageReference Include="Microsoft.Identity.Web" Version="1.1.0" />
+        <PackageReference Include="Microsoft.Identity.Web.UI" Version="1.1.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="Customer\.DS_Store" />
+      <Content Include="Customer\.svelte-kit\build\app.js" />
+      <Content Include="Customer\.svelte-kit\build\components\error.svelte" />
+      <Content Include="Customer\.svelte-kit\build\components\layout.svelte" />
+      <Content Include="Customer\.svelte-kit\build\generated\manifest.js" />
+      <Content Include="Customer\.svelte-kit\build\generated\root.svelte" />
+      <Content Include="Customer\.svelte-kit\build\hooks.js" />
+      <Content Include="Customer\.svelte-kit\build\runtime\app\env.js" />
+      <Content Include="Customer\.svelte-kit\build\runtime\app\navigation.js" />
+      <Content Include="Customer\.svelte-kit\build\runtime\app\paths.js" />
+      <Content Include="Customer\.svelte-kit\build\runtime\app\stores.js" />
+      <Content Include="Customer\.svelte-kit\build\runtime\chunks\utils.js" />
+      <Content Include="Customer\.svelte-kit\build\runtime\env.js" />
+      <Content Include="Customer\.svelte-kit\build\runtime\internal\singletons.js" />
+      <Content Include="Customer\.svelte-kit\build\runtime\internal\start.js" />
+      <Content Include="Customer\.svelte-kit\build\runtime\paths.js" />
+      <Content Include="Customer\.svelte-kit\dev\components\error.svelte" />
+      <Content Include="Customer\.svelte-kit\dev\components\layout.svelte" />
+      <Content Include="Customer\.svelte-kit\dev\generated\manifest.js" />
+      <Content Include="Customer\.svelte-kit\dev\generated\root.svelte" />
+      <Content Include="Customer\.svelte-kit\dev\runtime\app\env.js" />
+      <Content Include="Customer\.svelte-kit\dev\runtime\app\navigation.js" />
+      <Content Include="Customer\.svelte-kit\dev\runtime\app\paths.js" />
+      <Content Include="Customer\.svelte-kit\dev\runtime\app\stores.js" />
+      <Content Include="Customer\.svelte-kit\dev\runtime\chunks\utils.js" />
+      <Content Include="Customer\.svelte-kit\dev\runtime\env.js" />
+      <Content Include="Customer\.svelte-kit\dev\runtime\internal\singletons.js" />
+      <Content Include="Customer\.svelte-kit\dev\runtime\internal\start.js" />
+      <Content Include="Customer\.svelte-kit\dev\runtime\paths.js" />
+      <Content Include="Customer\.svelte-kit\output\client\_app\assets\fira-mono-all-400-normal.0d19eb5d.woff" />
+      <Content Include="Customer\.svelte-kit\output\client\_app\assets\fira-mono-cyrillic-400-normal.046b609f.woff2" />
+      <Content Include="Customer\.svelte-kit\output\client\_app\assets\fira-mono-cyrillic-ext-400-normal.b3140dd3.woff2" />
+      <Content Include="Customer\.svelte-kit\output\client\_app\assets\fira-mono-greek-400-normal.1f8b3a07.woff2" />
+      <Content Include="Customer\.svelte-kit\output\client\_app\assets\fira-mono-greek-ext-400-normal.8659ae46.woff2" />
+      <Content Include="Customer\.svelte-kit\output\client\_app\assets\fira-mono-latin-400-normal.a2f9dbe8.woff2" />
+      <Content Include="Customer\.svelte-kit\output\client\_app\assets\fira-mono-latin-ext-400-normal.b6331a25.woff2" />
+      <Content Include="Customer\.svelte-kit\output\client\_app\assets\pages\__layout.svelte-1eb5c4b2.css" />
+      <Content Include="Customer\.svelte-kit\output\client\_app\assets\start-8077b9bf.css" />
+      <Content Include="Customer\.svelte-kit\output\client\_app\assets\svelte-logo.87df40b8.svg" />
+      <Content Include="Customer\.svelte-kit\output\client\_app\chunks\vendor-9c647703.js" />
+      <Content Include="Customer\.svelte-kit\output\client\_app\error.svelte-f421fbf1.js" />
+      <Content Include="Customer\.svelte-kit\output\client\_app\pages\index.svelte-591f6b05.js" />
+      <Content Include="Customer\.svelte-kit\output\client\_app\pages\__layout.svelte-ee8a9bb3.js" />
+      <Content Include="Customer\.svelte-kit\output\client\_app\start-355b77bb.js" />
+      <Content Include="Customer\.svelte-kit\output\manifest.json" />
+      <Content Include="Customer\.svelte-kit\output\server\app.js" />
+    </ItemGroup>
+
+</Project>
